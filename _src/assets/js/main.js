@@ -19,13 +19,19 @@ const displaySeries = (dataResponse) => {
         const elementList = document.createElement('li');
         const elementText = document.createElement('h2');
         const elementImage = document.createElement('img');
+        let imagen = `${dataResponse[i].show.image}`;
 
         elementText.innerHTML = `${dataResponse[i].show.name}`;
-        elementImage.src = `${dataResponse[i].show.image.medium}`;
         elementList.appendChild(elementText);
         elementList.appendChild(elementImage);
         elementUl.appendChild(elementList);
         elementWrapper.appendChild(elementUl);
+
+        if (imagen === 'null') {
+            elementImage.src = 'https://via.placeholder.com/210x295/fabada/666666/?text=TV';
+        } else {
+            elementImage.src = `${dataResponse[i].show.image.medium}`;
+        }
     }
 }
 
