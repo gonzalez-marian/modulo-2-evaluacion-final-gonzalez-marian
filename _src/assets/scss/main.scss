@@ -2,3 +2,12 @@
 body {
 	background-color: aqua;
 }
+.wrapper {
+	display: flex;
+
+}
+
+.selected {
+	background-color: blueviolet;
+	color: burlywood;
+  }
