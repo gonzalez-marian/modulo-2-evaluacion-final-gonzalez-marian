@@ -27,25 +27,9 @@ function selectedFavorites(event) {
         image: showImageFavorite.src
     }
     showFavorite.push(showsObject);
-
     addNewShow(showsObject);
-
     localStorage.setItem('selected', JSON.stringify(showFavorite));
-    paintFavorite(showsObject);
 }
-
-const paintFavorite = (showsObject) => {
-    const liPrueba = document.createElement('li');
-    liPrueba.innerHTML += `<h2>${showsObject.name}</h2><img src=${showsObject.image}>`;
-    const liButton = document.createElement('button')
-    liButton.innerHTML = 'X';
-    liButton.addEventListener('click', deleteLocal);
-    liPrueba.appendChild(liButton);
-    elementListFav.appendChild(liPrueba);
-}
-
-
-
 const displaySeries = (dataResponse) => {
     for (let i = 0; i < dataResponse.length; i++) {
         const elementUl = document.createElement('ul');
@@ -76,7 +60,6 @@ const getLocalStorage = () => {
     paintListLastVisited(showFavorite);
     init();
 }
-
 const paintListLastVisited = (arr) => {
     for (let item of arr) {
         addNewShow(item)
@@ -84,13 +67,24 @@ const paintListLastVisited = (arr) => {
 }
 const deleteLocal = () => {
     localStorage.removeItem('selected');
-    liPrueba.innerHTML = '';
+    elementListFav.innerHTML = '';
 }
 
 const addNewShow = (object) => {
-    elementListFav.innerHTML += `<h2>${object.name}</h2><img src=${object.image}>`;
+    const liObject = document.createElement('li');
+    liObject.innerHTML += `<h2>${object.name}</h2><img src=${object.image}>`;
+    const liButton = document.createElement('button')
+    liButton.innerHTML = 'X';
+    liButton.addEventListener('click', deleteLocal);
+    liObject.appendChild(liButton);
+    elementListFav.appendChild(liObject);
 }
 
+function enterForm(event) {
+    event.preventDefault();
+    init();
+}
 
+elementForm.addEventListener('submit', enterForm);
 elementButton.addEventListener('click', init);
 window.addEventListener('load', getLocalStorage);
