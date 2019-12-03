@@ -37,14 +37,12 @@ const displaySeries = (dataResponse) => {
         const elementText = document.createElement('h2');
         const elementImage = document.createElement('img');
         let imagen = `${dataResponse[i].show.image}`;
-
         elementText.innerHTML = `${dataResponse[i].show.name}`;
         elementList.appendChild(elementText);
         elementList.appendChild(elementImage);
         elementUl.addEventListener('click', selectedFavorites);
         elementUl.appendChild(elementList);
         elementWrapper.appendChild(elementUl);
-
         if (imagen === 'null') {
             elementImage.src = 'https://via.placeholder.com/210x295/fabada/666666/?text=TV';
         } else {
@@ -69,7 +67,6 @@ const deleteLocal = () => {
     localStorage.removeItem('selected');
     elementListFav.innerHTML = '';
 }
-
 const addNewShow = (object) => {
     const liObject = document.createElement('li');
     liObject.innerHTML += `<h2>${object.name}</h2><img src=${object.image}>`;
@@ -79,12 +76,10 @@ const addNewShow = (object) => {
     liObject.appendChild(liButton);
     elementListFav.appendChild(liObject);
 }
-
 function enterForm(event) {
     event.preventDefault();
     init();
 }
-
 elementForm.addEventListener('submit', enterForm);
 elementButton.addEventListener('click', init);
 window.addEventListener('load', getLocalStorage);

@@ -1,16 +1,14 @@
-
-body {
+.wrapper {
 	background-color: lightseagreen;
 }
-.container {
+.containerGeneral {
 	display: flex;
 	flex-direction: row-reverse;
 	justify-content: space-between;
 	color: white;
 }
-.wrapper {
+.content {
 	width: 280px;
-	
 }
 .button-Search {
 	background-color: lightsalmon;
