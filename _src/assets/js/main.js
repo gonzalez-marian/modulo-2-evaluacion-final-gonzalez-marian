@@ -34,8 +34,11 @@ function selectedFavorites(event) {
 const paintFavorite = (showsObject) => {
     elementListFav.innerHTML += `<li>${showsObject.name}</li><img src=${showsObject.image}>`;
     const liElement = document.createElement('li');
+    elementListFav.addEventListener('click', deleteLocal)
     elementListFav.appendChild(liElement);
 }
+
+
 
 const displaySeries = (dataResponse) => {
     for (let i = 0; i < dataResponse.length; i++) {
@@ -65,5 +68,9 @@ const getLocalStorage = () => {
         showFavorite = JSON.parse(myLocal);
     }
 }
-
+const deleteLocal = () => {
+    localStorage.removeItem('selected');
+    elementListFav.innerHTML = '';
+    // elementWrapper.classList.remove('selected');
+}
 elementButton.addEventListener('click', init);
