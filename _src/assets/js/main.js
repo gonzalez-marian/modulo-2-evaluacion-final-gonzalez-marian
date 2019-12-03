@@ -1,29 +1,39 @@
 'use strict'
 
 const elementWrapper = document.querySelector('#wrapper');
+const elementForm = document.querySelector('#form');
 const elementInput = document.querySelector('#input-Search');
 const elementButton = document.querySelector('#button-Search');
 const mySeries = document.querySelector('#mySeries');
 const urlBase = 'http://api.tvmaze.com/search/shows?q=';
-let elementsText;
-let lastVisitedSeries = [];
+let showFavorite = [];
 
 function init() {
     const inputValue = elementInput.value.toLowerCase();
+    event.preventDefault();
     fetch(urlBase + inputValue)
         .then(response => response.json())
-        .then(dataResponse =>
-            displaySeries(dataResponse))
-    elementsText = document.querySelectorAll('.series-title')
+        .then(dataResponse => {
+            displaySeries(dataResponse)
+        })
 }
-
-function selectedColorHandler(event) {
+function selectedFavorites(event) {
     event.currentTarget.classList.toggle('selected');
+    const showNameFavorite = event.currentTarget.querySelector('h2');
+    const showImageFavorite = event.currentTarget.querySelector('img');
+    const showsObject = {
+        name: showNameFavorite.innerHTML,
+        image: showImageFavorite.src
+    }
+    showFavorite.push(showsObject);
+    localStorage.setItem('selected', JSON.stringify(showFavorite));
+    // console.log(showsObject.image)
 }
 
 const displaySeries = (dataResponse) => {
 
     for (let i = 0; i < dataResponse.length; i++) {
+
         const elementUl = document.createElement('ul');
         const elementList = document.createElement('li');
         const elementText = document.createElement('h2');
@@ -31,10 +41,10 @@ const displaySeries = (dataResponse) => {
         let imagen = `${dataResponse[i].show.image}`;
 
         elementText.innerHTML = `${dataResponse[i].show.name}`;
-        elementText.classList.add('series-title');
+
         elementList.appendChild(elementText);
         elementList.appendChild(elementImage);
-        elementUl.addEventListener('click', selectedColorHandler);
+        elementUl.addEventListener('click', selectedFavorites);
         elementUl.appendChild(elementList);
         elementWrapper.appendChild(elementUl);
 
@@ -45,9 +55,26 @@ const displaySeries = (dataResponse) => {
         }
     }
 }
+// const getLocalStorage = () => {
+//     const userData = JSON.parse(localStorage.getItem('userData'));
+//     if (userData !== null) {
+//         elementInput.value = userData.name;
+//         elementImage.src = userData.image;
+//     }
+// };
 
+// const handleInput = () => {
 
+//     const seriesObject = {
+//         name: elementUl.classList.contains('selected'),
+//     }
+//     console.log('seriesObject')
+//     localStorage.setItem('userData', JSON.stringify(seriesObject));
+// };
+
+// form.addEventListener('keyup', handleInput);
 elementButton.addEventListener('click', init);
+// getLocalStorage();
 
 
 
@@ -171,3 +198,19 @@ elementButton.addEventListener('click', init);
 
 // elementButton.addEventListener('click', init);
 // window.addEventListener('load', getLocalStorage);
+
+
+// const setLocalStorage = () => {
+//     for (const item of elementsList) {
+//         const liItem = new DOMParser().parseFromString(item, "text/xml");
+//         console.log(liItem);
+//         if (liItem.classList.contains('selected')) {
+//             const name = liItem.firstChild.innerHTML;
+//             const img = liItem.lastChild.src;
+//             const seriesObject = {
+//                 "name": name,
+//                 "image": img,
+//             }console.log(seriesObject);
+//         }
+//     }
+// }
