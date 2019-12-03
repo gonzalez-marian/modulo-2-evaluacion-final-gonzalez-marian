@@ -2,12 +2,17 @@
 body {
 	background-color: aqua;
 }
-.wrapper {
+.container {
 	display: flex;
-
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	
 }
-
+.wrapper {
+	width: 280px;
+	text-decoration: none;
+}
 .selected {
 	background-color: blueviolet;
 	color: burlywood;
-  }
+}
