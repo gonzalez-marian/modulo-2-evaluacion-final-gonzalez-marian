@@ -8,6 +8,7 @@ const mySeries = document.querySelector('#mySeries');
 const elementListFav = document.querySelector('#list-favorites');
 const urlBase = 'http://api.tvmaze.com/search/shows?q=';
 let showFavorite = [];
+let languages = ['English', 'Spanish', 'Portuguese'];
 
 function init() {
     const inputValue = elementInput.value.toLowerCase();
@@ -36,8 +37,13 @@ const displaySeries = (dataResponse) => {
         const elementList = document.createElement('li');
         const elementText = document.createElement('h2');
         const elementImage = document.createElement('img');
+        const text = document.createElement('span');
         let imagen = `${dataResponse[i].show.image}`;
+        const lang = document.createElement('span');
+        text.innerHTML = `${dataResponse[i].show.language}`;
         elementText.innerHTML = `${dataResponse[i].show.name}`;
+        elementList.appendChild(text);
+        elementList.appendChild(lang);
         elementList.appendChild(elementText);
         elementList.appendChild(elementImage);
         elementUl.addEventListener('click', selectedFavorites);
@@ -48,8 +54,14 @@ const displaySeries = (dataResponse) => {
         } else {
             elementImage.src = `${dataResponse[i].show.image.medium}`;
         }
+        if (languages.indexOf(dataResponse[i].show.language) !== -1) {
+            lang.innerHTML = 'Recomendado';
+        } else {
+            lang.innerHTML = 'No recomendado';
+        }
     }
 }
+
 const getLocalStorage = () => {
     const myLocal = localStorage.getItem('selected');
     if (myLocal !== null) {
